@@ -11,7 +11,7 @@ from datetime import date
 # PUBLIC ATTENTION INTELLIGENCE | Streamlit dashboard
 # =========================================================
 st.set_page_config(
-    page_title="Public Attention Intelligence",
+    page_title="Public Attention Lifecycle Analysis & Intelligence System",
     page_icon="📡",
     layout="wide",
     initial_sidebar_state="expanded",
