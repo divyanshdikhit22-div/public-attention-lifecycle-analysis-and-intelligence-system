@@ -292,7 +292,25 @@ with st.sidebar:
         type="primary",
         use_container_width=True
     )
+    topic = st.selectbox(
+    "Select Topic",
+    list(topics.keys())
+)
+    
+    config = topics[topic]
 
+    date_range = st.date_input(
+        "Select Analysis Date Range",
+        value=(
+            pd.to_datetime(
+                config["start"], format="%Y%m%d"
+            ).date(),
+            pd.to_datetime(
+                config["end"], format="%Y%m%d"
+            ).date()
+        ),
+        key="main_analysis_date_range"
+    )
 # ---------------------------------
 # 8. SAVE SELECTED ANALYSIS
 # ---------------------------------
@@ -307,11 +325,18 @@ if analyze_button:
     try:
         with st.spinner("Fetching and analyzing data..."):
 
-            df = fetch_data(
-                config["article"],
-                config["start"],
-                config["end"]
-            )
+            
+if len(date_range) != 2 or date_range[0] >= date_range[1]:
+    raise ValueError(
+        "Please select a valid start and end date."
+    )
+
+df = fetch_data(
+    config["article"],
+    date_range[0].strftime("%Y%m%d"),
+    date_range[1].strftime("%Y%m%d")
+)
+
 
             df, peak_views, peak_date, growth, decline = (
                 analyze_data(df)
