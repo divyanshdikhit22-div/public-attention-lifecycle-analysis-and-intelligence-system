@@ -231,6 +231,35 @@ def generate_insights(peak_views, peak_date, growth, decline):
 
 
 # ---------------------------------
+# TOPIC COMPARISON
+# ---------------------------------
+
+def prepare_comparison(df, topic_name):
+    comparison_df = df[["timestamp", "views"]].copy()
+
+    comparison_df = comparison_df.sort_values("timestamp")
+
+    # Normalize views using the first day's views
+    first_views = comparison_df["views"].iloc[0]
+
+    if first_views > 0:
+        comparison_df["normalized_views"] = (
+            comparison_df["views"] / first_views
+        ) * 100
+    else:
+        comparison_df["normalized_views"] = np.nan
+
+    comparison_df = comparison_df.rename(
+        columns={
+            "normalized_views": topic_name
+        }
+    )
+
+    return comparison_df[["timestamp", topic_name]]
+
+
+
+# ---------------------------------
 # 6. WEBSITE HEADER
 # ---------------------------------
 
