@@ -657,11 +657,9 @@ with st.expander("Open Topic Comparison", expanded=True):
                         plt.close(fig)
 
                         st.caption(
-                            "Each topic is normalized using its first "
-                            "available day's views. An index of 200 "
-                            "means twice that topic's baseline views. "
-                            "This compares relative trends, not absolute "
-                            "pageview counts or total public interest."
+                            "Each topic is normalized using its first available day's views.
+                            An index of 200 means twice that topic's baseline views.
+                            This compares relative trends, not absolute pageview counts or total public interest"
                         )
 
                         with st.expander(
