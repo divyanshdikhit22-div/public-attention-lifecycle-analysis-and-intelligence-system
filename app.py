@@ -35,8 +35,39 @@ topics = {
         "article": "2022 FIFA World Cup",
         "start": "20221001",
         "end": "20230131"
+    },
+    "COVID-19 Pandemic": {
+        "article": "COVID-19 pandemic",
+        "start": "20200101",
+        "end": "20231231"
+    },
+    "2024 Summer Olympics": {
+        "article": "2024 Summer Olympics",
+        "start": "20240701",
+        "end": "20240930"
+    },
+    "2024 Indian General Election": {
+        "article": "2024 Indian general election",
+        "start": "20240401",
+        "end": "20240630"
+    },
+    "BGMI": {
+        "article": "Battlegrounds Mobile India",
+        "start": "20210501",
+        "end": "20231231"
+    },
+    "Tesla": {
+        "article": "Tesla, Inc.",
+        "start": "20200101",
+        "end": "20231231"
+    },
+    "Dangal Movie": {
+        "article": "Dangal (2016 film)",
+        "start": "20161001",
+        "end": "20171231"
     }
 }
+    
 
 # ---------------------------------
 # 3. DATA COLLECTION
