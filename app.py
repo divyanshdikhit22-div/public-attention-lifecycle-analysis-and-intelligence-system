@@ -279,10 +279,11 @@ with st.sidebar:
     st.header("Analysis Controls")
 
     topic = st.selectbox(
-        "Select Topic",
-        list(topics.keys())
-    )
-
+    "Select Topic",
+    list(topics.keys()),
+    key="main_topic_select"
+)
+    
     st.info(
         "Data Source: English Wikipedia Pageviews API"
     )
