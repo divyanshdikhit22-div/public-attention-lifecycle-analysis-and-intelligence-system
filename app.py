@@ -311,6 +311,7 @@ with st.sidebar:
         ),
         key="main_analysis_date_range"
     )
+
 # ---------------------------------
 # 8. SAVE SELECTED ANALYSIS
 # ---------------------------------
@@ -325,23 +326,28 @@ if analyze_button:
     try:
         with st.spinner("Fetching and analyzing data..."):
 
-            
-if len(date_range) != 2 or date_range[0] >= date_range[1]:
-    raise ValueError(
-        "Please select a valid start and end date."
-    )
+            # Validate selected date range
+            if (
+                len(date_range) != 2
+                or date_range[0] >= date_range[1]
+            ):
+                raise ValueError(
+                    "Please select a valid start and end date."
+                )
 
-df = fetch_data(
-    config["article"],
-    date_range[0].strftime("%Y%m%d"),
-    date_range[1].strftime("%Y%m%d")
-)
+            # Fetch data using selected dates
+            df = fetch_data(
+                config["article"],
+                date_range[0].strftime("%Y%m%d"),
+                date_range[1].strftime("%Y%m%d")
+            )
 
-
+            # Analyze the fetched data
             df, peak_views, peak_date, growth, decline = (
                 analyze_data(df)
             )
 
+            # Generate automatic insights
             insights = generate_insights(
                 peak_views,
                 peak_date,
@@ -349,6 +355,7 @@ df = fetch_data(
                 decline
             )
 
+            # Save analysis results
             st.session_state.selected_analysis = {
                 "topic": topic,
                 "df": df,
@@ -359,8 +366,12 @@ df = fetch_data(
                 "insights": insights
             }
 
-    except (requests.RequestException, ValueError,
-            KeyError, TypeError) as error:
+    except (
+        requests.RequestException,
+        ValueError,
+        KeyError,
+        TypeError
+    ) as error:
 
         st.session_state.selected_analysis = None
         st.error(f"Analysis failed: {error}")
