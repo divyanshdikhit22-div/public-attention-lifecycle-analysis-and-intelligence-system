@@ -500,3 +500,185 @@ else:
         "Wikipedia pageviews indicate article readership, "
         "not unique people or actual product usage."
     )
+
+# ---------------------------------
+# 14. TOPIC COMPARISON MODE
+# ---------------------------------
+
+st.divider()
+
+st.header("🔍 Topic Comparison Mode")
+
+st.write(
+    "Compare the relative attention trends of two topics "
+    "over the same date range."
+)
+
+with st.expander("Open Topic Comparison", expanded=True):
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        topic_a = st.selectbox(
+            "First Topic",
+            list(topics.keys()),
+            index=0,
+            key="compare_topic_a"
+        )
+
+    with col2:
+        topic_b = st.selectbox(
+            "Second Topic",
+            list(topics.keys()),
+            index=1,
+            key="compare_topic_b"
+        )
+
+    col3, col4 = st.columns(2)
+
+    with col3:
+        compare_start = st.date_input(
+            "Start Date",
+            value=pd.to_datetime("2023-01-01").date(),
+            key="compare_start_date"
+        )
+
+    with col4:
+        compare_end = st.date_input(
+            "End Date",
+            value=pd.to_datetime("2023-12-31").date(),
+            key="compare_end_date"
+        )
+
+    compare_button = st.button(
+        "Compare Topics",
+        type="primary",
+        key="compare_topics_button"
+    )
+
+    if compare_button:
+
+        if topic_a == topic_b:
+            st.warning("Please select two different topics.")
+
+        elif compare_start >= compare_end:
+            st.warning(
+                "End Date must be later than Start Date."
+            )
+
+        else:
+
+            try:
+                with st.spinner(
+                    "Fetching data and preparing comparison..."
+                ):
+
+                    config_a = topics[topic_a]
+                    config_b = topics[topic_b]
+
+                    start_str = compare_start.strftime("%Y%m%d")
+                    end_str = compare_end.strftime("%Y%m%d")
+
+                    df_a = fetch_data(
+                        config_a["article"],
+                        start_str,
+                        end_str
+                    )
+
+                    df_b = fetch_data(
+                        config_b["article"],
+                        start_str,
+                        end_str
+                    )
+
+                    comparison_a = prepare_comparison(
+                        df_a,
+                        topic_a
+                    )
+
+                    comparison_b = prepare_comparison(
+                        df_b,
+                        topic_b
+                    )
+
+                    comparison_df = pd.merge(
+                        comparison_a,
+                        comparison_b,
+                        on="timestamp",
+                        how="inner"
+                    )
+
+                    comparison_df = comparison_df.dropna()
+
+                    if comparison_df.empty:
+                        st.warning(
+                            "No common comparison data available "
+                            "for these topics and dates."
+                        )
+
+                    else:
+
+                        st.subheader(
+                            f"{topic_a} vs {topic_b}"
+                        )
+
+                        fig, ax = plt.subplots(figsize=(12, 5))
+
+                        ax.plot(
+                            comparison_df["timestamp"],
+                            comparison_df[topic_a],
+                            label=topic_a,
+                            linewidth=2
+                        )
+
+                        ax.plot(
+                            comparison_df["timestamp"],
+                            comparison_df[topic_b],
+                            label=topic_b,
+                            linewidth=2
+                        )
+
+                        ax.set_title(
+                            "Normalized Public Attention Trends"
+                        )
+
+                        ax.set_xlabel("Date")
+
+                        ax.set_ylabel(
+                            "Attention Index (First Day = 100)"
+                        )
+
+                        ax.legend()
+                        ax.grid(True, alpha=0.3)
+
+                        fig.autofmt_xdate()
+
+                        st.pyplot(fig)
+                        plt.close(fig)
+
+                        st.caption(
+                            "Each topic is normalized using its first "
+                            "available day's views. An index of 200 "
+                            "means twice that topic's baseline views. "
+                            "This compares relative trends, not absolute "
+                            "pageview counts or total public interest."
+                        )
+
+                        with st.expander(
+                            "View Comparison Dataset"
+                        ):
+                            st.dataframe(
+                                comparison_df,
+                                use_container_width=True
+                            )
+
+            except (
+                requests.RequestException,
+                ValueError,
+                KeyError,
+                TypeError
+            ) as error:
+
+                st.error(
+                    f"Comparison failed: {error}"
+                )
