@@ -8,7 +8,7 @@ from urllib.parse import quote
 from datetime import date
 
 # =========================================================
-# PUBLIC ATTENTION INTELLIGENCE | Streamlit dashboard
+# PUBLIC ATTENTION LIFECYCLE ANALYSIS & INTELLIGENCE SYSTEM | Streamlit dashboard updated
 # =========================================================
 st.set_page_config(
     page_title="Public Attention Lifecycle Analysis & Intelligence System",
