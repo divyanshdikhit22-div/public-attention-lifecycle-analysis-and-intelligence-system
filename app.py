@@ -318,7 +318,9 @@ else:
     with overview_tab:
         st.markdown("#### Attention timeline")
         st.caption("Hover over the chart for exact values. Use the range slider under the chart to zoom into a period.")
-        st.plotly_chart(plot_trend(result, topic_name), use_container_width=True, config={"displaylogo": False, "scrollZoom": True})
+        trend_fig = plot_trend(result, topic_name)
+        trend_fig.update_layout(legend=dict(orientation="h", yanchor="bottom", y=-0.5, xanchor="center", x=0.5))
+        st.plotly_chart(trend_fig, use_container_width=True, config={"displaylogo": False, "scrollZoom": True})
         chart_l, chart_r = st.columns([1, 1])
         with chart_l:
             st.markdown("#### Attention phase distribution")
