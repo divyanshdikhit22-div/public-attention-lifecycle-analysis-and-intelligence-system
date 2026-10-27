@@ -322,6 +322,8 @@ else:
         chart_l, chart_r = st.columns([1, 1])
         with chart_l:
             st.markdown("#### Attention phase distribution")
+
+            
             counts = df["phase"].value_counts().reindex(["Growth", "Decline", "Stable", "Insufficient Data"], fill_value=0).reset_index()
             counts.columns = ["Phase", "Records"]
             phase_fig = px.pie(counts, names="Phase", values="Records", hole=.62,
