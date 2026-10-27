@@ -245,7 +245,7 @@ with st.sidebar:
 st.markdown("""
 <div class="hero">
   <div class="eyebrow">Student research dashboard · Live API data</div>
-  <div class="hero-title">Public Attention Lifecycle Analysis & Intelligence System <span style="color:#67e8f9">Intelligence</span></div>
+  <div class="hero-title">Public Attention Lifecycle Analysis & <span style="color:#67e8f9">Intelligence System </span></div>
   <div class="hero-copy">Explore how attention around major events, technology, entertainment and gaming changes over time. Find peaks, inspect trends and compare topics with interactive charts.</div>
   <div style="margin-top:.85rem">
     <span class="pill">📈 Trend analysis</span>
