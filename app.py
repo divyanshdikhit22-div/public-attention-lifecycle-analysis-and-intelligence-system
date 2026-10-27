@@ -221,7 +221,7 @@ def fetch_analyzed(topic_name, start_date, end_date):
 # ---------- Sidebar ----------
 with st.sidebar:
     st.markdown("## 📡 Attention Lab")
-    st.caption("PUBLIC ATTENTION INTELLIGENCE")
+    st.caption("PUBLIC ATTENTION LIFECYCLE ANALYSIS & INTELLIGENCE SYSTEM ")
     st.divider()
     st.markdown("### 🎯 Analysis controls")
     topic = st.selectbox("Choose a topic", list(TOPICS.keys()), key="topic_select")
