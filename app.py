@@ -330,8 +330,8 @@ else:
                                color="Phase", color_discrete_map={
                                    "Growth": "#34d399", "Decline": "#fb7185",
                                    "Stable": "#60a5fa", "Insufficient Data": "#a78bfa"})
-            phase_fig.update_layout(**PLOTLY_LAYOUT, title="Record-level direction")
-            phase_fig.update_traces(textposition="inside", textinfo="percent+label", hole=.62)
+            phase_fig.update_layout(**PLOTLY_LAYOUT, legend_title_text="")
+            phase_fig.update_traces(textposition="inside", textinfo="percent+label", hole=0.62)
             st.plotly_chart(phase_fig, use_container_width=True, config={"displaylogo": False})
         with chart_r:
             st.markdown("#### Day-to-day readership")
